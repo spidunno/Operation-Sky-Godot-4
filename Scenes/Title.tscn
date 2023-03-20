@@ -257,9 +257,17 @@ radius = 1.5
 [node name="Title" type="Node3D"]
 script = ExtResource("16")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="World" type="Node" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="WorldSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/World.tscn")
+spawn_path = NodePath("../World")
+
+[node name="Title" type="Node" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Title"]
+
+[node name="Control" type="Control" parent="Title/CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -268,7 +276,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("15")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Title/CanvasLayer/Control"]
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
@@ -279,49 +287,49 @@ offset_top = -268.0
 offset_right = 328.0
 offset_bottom = 268.0
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Label" type="Label" parent="Title/CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("14")
 theme_override_font_sizes/font_size = 64
 text = "Operation: Sky"
 horizontal_alignment = 1
 
-[node name="Spacer" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Spacer" type="Control" parent="Title/CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 
-[node name="Username" type="LineEdit" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Username" type="LineEdit" parent="Title/CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "Username"
 alignment = 1
 
-[node name="ServerMenu" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="ServerMenu" type="HBoxContainer" parent="Title/CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="Host" type="Button" parent="CanvasLayer/Control/VBoxContainer/ServerMenu"]
+[node name="Host" type="Button" parent="Title/CanvasLayer/Control/VBoxContainer/ServerMenu"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Host"
 
-[node name="Join" type="Button" parent="CanvasLayer/Control/VBoxContainer/ServerMenu"]
+[node name="Join" type="Button" parent="Title/CanvasLayer/Control/VBoxContainer/ServerMenu"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Join"
 
-[node name="Address" type="LineEdit" parent="CanvasLayer/Control/VBoxContainer/ServerMenu"]
+[node name="Address" type="LineEdit" parent="Title/CanvasLayer/Control/VBoxContainer/ServerMenu"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Address"
 alignment = 1
 
-[node name="Port" type="SpinBox" parent="CanvasLayer/Control/VBoxContainer/ServerMenu"]
+[node name="Port" type="SpinBox" parent="Title/CanvasLayer/Control/VBoxContainer/ServerMenu"]
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 99999.0
 value = 11987.0
 alignment = 1
 
-[node name="Theme" type="OptionButton" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Theme" type="OptionButton" parent="Title/CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
@@ -331,45 +339,45 @@ popup/item_0/id = 0
 popup/item_1/text = "Clean"
 popup/item_1/id = 1
 
-[node name="Quit" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Quit" type="Button" parent="Title/CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Title"]
 environment = SubResource("12")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Title"]
 transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 0, 0)
 
-[node name="Main Island" type="CSGBox3D" parent="."]
+[node name="Main Island" type="CSGBox3D" parent="Title"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.00636578, 0.0146129, 0.00239277)
 use_collision = true
 size = Vector3(8, 1, 8)
 material = ExtResource("5")
 
-[node name="Drill" parent="." instance=ExtResource("2")]
+[node name="Drill" parent="Title" instance=ExtResource("2")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 1.8)
 
-[node name="The Source" type="Area3D" parent="." groups=["hurtbox", "source"]]
+[node name="The Source" type="Area3D" parent="Title" groups=["hurtbox", "source"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("1")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="The Source"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Title/The Source"]
 size = Vector3(0.5, 0.5, 0.5)
 material = SubResource("13")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="The Source"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Title/The Source"]
 shape = SubResource("14")
 
-[node name="Hitbox" type="StaticBody3D" parent="The Source"]
+[node name="Hitbox" type="StaticBody3D" parent="Title/The Source"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="The Source/Hitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Title/The Source/Hitbox"]
 shape = SubResource("15")
 
-[node name="Timer" type="Timer" parent="The Source"]
+[node name="Timer" type="Timer" parent="Title/The Source"]
 wait_time = 60.0
 
-[node name="Stats" parent="The Source" instance=ExtResource("4")]
+[node name="Stats" parent="Title/The Source" instance=ExtResource("4")]
 health = 1
 stats = {
 "Cactus": 0,
@@ -396,46 +404,46 @@ colors = {
 "Wood": Color(0.670588, 0.329412, 0.129412, 1)
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="The Source"]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title/The Source"]
+root_node = NodePath("../../..")
 libraries = {
 "": SubResource("AnimationLibrary_5cd0o")
 }
 
-[node name="Dropper" parent="." instance=ExtResource("3")]
+[node name="Dropper" parent="Title" instance=ExtResource("3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 2.9)
 
-[node name="Spinner" type="Node3D" parent="."]
+[node name="Spinner" type="Node3D" parent="Title"]
 script = ExtResource("6")
 
-[node name="Camera3D" type="Camera3D" parent="Spinner"]
+[node name="Camera3D" type="Camera3D" parent="Title/Spinner"]
 transform = Transform3D(0.707107, 0.383025, -0.594384, 0, 0.840586, 0.541679, 0.707107, -0.383025, 0.594384, -3, 3, 3)
 current = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Spinner"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title/Spinner"]
 libraries = {
 "": SubResource("AnimationLibrary_1iyuk")
 }
 
-[node name="Desert" type="CSGBox3D" parent="."]
+[node name="Desert" type="CSGBox3D" parent="Title"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -12, 0, 12)
 use_collision = true
 size = Vector3(24, 1, 24)
 material = ExtResource("13")
 
-[node name="ShovelCrystal" type="Area3D" parent="Desert"]
+[node name="ShovelCrystal" type="Area3D" parent="Title/Desert"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
 script = ExtResource("8")
 functionname = "activateshovelsword"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Desert/ShovelCrystal"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Title/Desert/ShovelCrystal"]
 shape = SubResource("20")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Desert/ShovelCrystal"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Title/Desert/ShovelCrystal"]
 size = Vector3(0.5, 0.5, 0.5)
 material = SubResource("21")
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Desert"]
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Title/Desert"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 polygon = PackedVector2Array(0, 6, 6, 0, 0, 6)
 mode = 1
@@ -443,39 +451,41 @@ spin_degrees = 360.0
 spin_sides = 4
 material = SubResource("22")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Desert"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title/Desert"]
 root_node = NodePath("../Area3D")
 libraries = {
 "": SubResource("AnimationLibrary_ev5w4")
 }
 
-[node name="Area3D" type="Area3D" parent="Desert"]
+[node name="Area3D" type="Area3D" parent="Title/Desert"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("7")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Desert/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Title/Desert/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8, 0)
 shape = SubResource("25")
 
-[node name="Volcano" type="CSGBox3D" parent="."]
+[node name="Volcano" type="CSGBox3D" parent="Title"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 12, 0, -12)
 use_collision = true
 size = Vector3(24, 1, 24)
 material = SubResource("26")
 script = ExtResource("9")
 
-[node name="FireCrystal" type="Area3D" parent="Volcano"]
+[node name="Cubes" type="Node" parent="Title/Volcano"]
+
+[node name="FireCrystal" type="Area3D" parent="Title/Volcano"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 7.5, 0)
 script = ExtResource("8")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Volcano/FireCrystal"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Title/Volcano/FireCrystal"]
 shape = SubResource("20")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Volcano/FireCrystal"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Title/Volcano/FireCrystal"]
 size = Vector3(0.5, 0.5, 0.5)
 material = SubResource("27")
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Volcano"]
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Title/Volcano"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 polygon = PackedVector2Array(6, 0, 4, 1.75, 3, 4, 1.75, 7, 0, 0)
 mode = 1
@@ -483,7 +493,7 @@ spin_degrees = 360.0
 spin_sides = 5
 material = ExtResource("12")
 
-[node name="CSGPolygon2" type="CSGPolygon3D" parent="Volcano"]
+[node name="CSGPolygon2" type="CSGPolygon3D" parent="Title/Volcano"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 polygon = PackedVector2Array(1.75, 7, 0, 7, 0, 5)
 mode = 1
@@ -491,30 +501,30 @@ spin_degrees = 360.0
 spin_sides = 5
 material = ExtResource("11")
 
-[node name="Hitbox" type="Area3D" parent="Volcano/CSGPolygon2"]
+[node name="Hitbox" type="Area3D" parent="Title/Volcano/CSGPolygon2"]
 script = ExtResource("10")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Volcano/CSGPolygon2/Hitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Title/Volcano/CSGPolygon2/Hitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.4, 0)
 shape = SubResource("28")
 
-[node name="Timer" type="Timer" parent="Volcano/CSGPolygon2"]
+[node name="Timer" type="Timer" parent="Title/Volcano/CSGPolygon2"]
 wait_time = 0.1
 one_shot = true
 
-[node name="Timer" type="Timer" parent="Volcano"]
+[node name="Timer" type="Timer" parent="Title/Volcano"]
 autostart = true
 
-[connection signal="text_submitted" from="CanvasLayer/Control/VBoxContainer/Username" to="." method="_on_Username_text_entered"]
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/ServerMenu/Host" to="." method="_on_Host_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/ServerMenu/Join" to="." method="_on_Join_pressed"]
-[connection signal="item_selected" from="CanvasLayer/Control/VBoxContainer/Theme" to="." method="_on_Theme_item_selected"]
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
-[connection signal="timeout" from="The Source/Timer" to="The Source" method="_on_Timer_timeout"]
-[connection signal="animation_finished" from="Spinner/AnimationPlayer" to="Spinner" method="_on_AnimationPlayer_animation_finished"]
-[connection signal="area_entered" from="Desert/ShovelCrystal" to="Desert/ShovelCrystal" method="_on_Crystal_area_entered"]
-[connection signal="area_entered" from="Desert/Area3D" to="Desert/Area3D" method="_on_Area_area_entered"]
-[connection signal="area_entered" from="Volcano/FireCrystal" to="Volcano/FireCrystal" method="_on_Crystal_area_entered"]
-[connection signal="area_entered" from="Volcano/CSGPolygon2/Hitbox" to="Volcano/CSGPolygon2/Hitbox" method="_on_Hitbox_area_entered"]
-[connection signal="timeout" from="Volcano/CSGPolygon2/Timer" to="Volcano/CSGPolygon2/Hitbox" method="_on_Timer_timeout"]
-[connection signal="timeout" from="Volcano/Timer" to="Volcano" method="_on_Timer_timeout"]
+[connection signal="text_submitted" from="Title/CanvasLayer/Control/VBoxContainer/Username" to="." method="_on_Username_text_entered"]
+[connection signal="pressed" from="Title/CanvasLayer/Control/VBoxContainer/ServerMenu/Host" to="." method="_on_Host_pressed"]
+[connection signal="pressed" from="Title/CanvasLayer/Control/VBoxContainer/ServerMenu/Join" to="." method="_on_Join_pressed"]
+[connection signal="item_selected" from="Title/CanvasLayer/Control/VBoxContainer/Theme" to="." method="_on_Theme_item_selected"]
+[connection signal="pressed" from="Title/CanvasLayer/Control/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="timeout" from="Title/The Source/Timer" to="Title/The Source" method="_on_Timer_timeout"]
+[connection signal="animation_finished" from="Title/Spinner/AnimationPlayer" to="Title/Spinner" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="area_entered" from="Title/Desert/ShovelCrystal" to="Title/Desert/ShovelCrystal" method="_on_Crystal_area_entered"]
+[connection signal="area_entered" from="Title/Desert/Area3D" to="Title/Desert/Area3D" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="Title/Volcano/FireCrystal" to="Title/Volcano/FireCrystal" method="_on_Crystal_area_entered"]
+[connection signal="area_entered" from="Title/Volcano/CSGPolygon2/Hitbox" to="Title/Volcano/CSGPolygon2/Hitbox" method="_on_Hitbox_area_entered"]
+[connection signal="timeout" from="Title/Volcano/CSGPolygon2/Timer" to="Title/Volcano/CSGPolygon2/Hitbox" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Title/Volcano/Timer" to="Title/Volcano" method="_on_Timer_timeout"]

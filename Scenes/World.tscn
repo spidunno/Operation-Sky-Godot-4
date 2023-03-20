@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://br3u6t7yqctsf"]
+[gd_scene load_steps=36 format=3 uid="uid://br3u6t7yqctsf"]
 
 [ext_resource type="Material" uid="uid://lpc3bt17b1ov" path="res://grid.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://bnaewbwfhgdsq" path="res://Scenes/Player.tscn" id="2"]
@@ -14,6 +14,20 @@
 [ext_resource type="Material" path="res://Assets/Resources/build-failed.tres" id="12"]
 [ext_resource type="Script" path="res://Scripts/Pyramid.gd" id="13"]
 [ext_resource type="Material" path="res://Assets/Resources/cloud.tres" id="14"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_p4dc1"]
+properties/0/path = NodePath("Islands/Volcano:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("Islands/Gravity City:position")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("Islands/Laser Matrix:position")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath("Islands/Desert:position")
+properties/3/spawn = true
+properties/3/sync = true
 
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -213,6 +227,9 @@ volumetric_fog_density = 0.005
 [node name="World3D" type="Node3D"]
 script = ExtResource("5")
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_p4dc1")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 0, 0)
 light_volumetric_fog_energy = 2.0
@@ -286,6 +303,12 @@ use_collision = true
 size = Vector3(24, 1, 24)
 material = SubResource("20")
 script = ExtResource("7")
+
+[node name="Cubes" type="Node" parent="Islands/Volcano"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Islands/Volcano"]
+_spawnable_scenes = PackedStringArray("res://Scenes/LavaChunk.tscn")
+spawn_path = NodePath("../Cubes")
 
 [node name="Resources" type="Node3D" parent="Islands/Volcano"]
 
@@ -376,7 +399,13 @@ shape = SubResource("1")
 size = Vector3(0.5, 0.5, 0.5)
 material = SubResource("19")
 
-[node name="Player" parent="." instance=ExtResource("2")]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Player.tscn")
+spawn_path = NodePath("../Players")
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="The Source" type="Area3D" parent="." groups=["hurtbox", "source"]]
